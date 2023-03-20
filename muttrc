@@ -1,0 +1,54 @@
+set realname = "Ray Garner"
+
+source ~/.mutt/colour.muttrc
+
+#aliases
+set alias_file = "~/.mutt/aliases"
+set sort_alias = alias
+set reverse_alias = yes
+source $alias_file
+
+#pfc email
+source ~/.mutt/pfc
+folder-hook $folder 'source ~/.mutt/pfc'
+
+#uon email
+#source ~/.mutt/uon
+#folder-hook $folder 'source ~/.mutt/uon'
+
+#gpg
+source ~/.mutt/gpg.rc
+
+set mail_check = 60
+#unset imap_passive
+set imap_keepalive = 2
+
+set sort = reverse-date-received
+
+set mailcap_path 	= ~/.mutt/mailcap
+
+auto_view text/html
+
+set header_cache = "~/.cache/mutt"
+set message_cachedir = "~/.cache/mutt"
+
+bind pager j next-line
+bind pager k previous-line
+bind attach,index,pager \CD next-page
+bind attach,index,pager \CU previous-page
+bind pager g top
+bind pager G bottom
+bind attach,index g first-entry
+bind attach,index G last-entry
+#bind index l display-message
+#bind index,pager h quit
+#bind index,pager h exit
+#bind index,pager n next-new-then-unread
+bind index "^" imap-fetch-mail
+
+macro index,pager <f2> '<sync-mailbox><enter-command>source ~/.mutt/pfc<enter><change-folder>!<enter>'
+macro index,pager <f3> '<sync-mailbox><enter-command>source ~/.mutt/uon<enter><change-folder>!<enter>'
+#macro attach 'V' "<pipe-entry>iconv -c --to-code=UTF8 > ~/.cache/mutt/mail.html<enter><shell-escape>brave ~/.cache/mutt/mail.html<enter>"
+#macro attach 'V' "<pipe-entry>iconv -c --to-code=UTF8 > ~/.cache/mail.html<enter><shell-escape>brave ~/.cache/mail.html<enter>"
+macro attach 'V' "<pipe-entry>iconv -c --to-code=UTF8 > ~/.cache/mail.html<enter><shell-escape>$BROWSER ~/.cache/mail.html<enter>"
+
